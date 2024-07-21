@@ -17,19 +17,22 @@ def parse_arguments():
 
 
 def copy_files(source, dest):
-    for item in os.listdir(source):
-        src_path = os.path.join(source, item)
-        if os.path.isdir(src_path):
-                copy_files(src_path, dest)
-        else:
-            file_extension = os.path.splitext(item)[1][1:].lower()
-            if file_extension:  
-                target_dir = os.path.join(dest, file_extension)
+    try:        
+        for item in os.listdir(source):
+            src_path = os.path.join(source, item)
+            if os.path.isdir(src_path):
+                    copy_files(src_path, dest)
+            else:
+                file_extension = os.path.splitext(item)[1][1:].lower()
+                if file_extension:  
+                    target_dir = os.path.join(dest, file_extension)
 
-                if not os.path.exists(target_dir):
-                    os.makedirs(target_dir)
+                    if not os.path.exists(target_dir):
+                        os.makedirs(target_dir)
 
-                shutil.copy2(src_path, target_dir)
+                    shutil.copy2(src_path, target_dir)
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 
